@@ -1,0 +1,923 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Professional Lawyer Dashboard
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1f2937; /* gray-800 */
+    }
+    /* Scrollbar for sidebar */
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background-color: rgba(234, 88, 12, 0.5); /* orange-600 */
+      border-radius: 3px;
+    }
+    /* Smooth fade and slide animations */
+    .fade-slide-enter {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .fade-slide-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Scrollbar for client cards */
+    #clientGrid::-webkit-scrollbar {
+      height: 8px;
+    }
+    #clientGrid::-webkit-scrollbar-thumb {
+      background-color: rgba(234, 88, 12, 0.5);
+      border-radius: 4px;
+    }
+  </style>
+ </head>
+ <body class="antialiased">
+  <div class="flex h-screen overflow-hidden">
+   <!-- Sidebar -->
+   <aside aria-label="Sidebar Navigation" class="sidebar-scroll fixed inset-y-0 left-0 w-64 bg-white shadow-lg flex flex-col z-30 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out" id="sidebar">
+    <div class="flex items-center justify-center h-20 border-b border-gray-200">
+     <img alt="Logo icon with scales of justice in orange gradient" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/7b668fa7-0f14-49d8-2e25-9c6843f6aace.jpg" width="40"/>
+     <h1 class="ml-3 text-2xl font-bold tracking-wide text-orange-600 select-none">
+      LawPro
+     </h1>
+    </div>
+    <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-2" role="navigation">
+     <button aria-current="page" class="flex items-center w-full px-3 py-2 rounded-md bg-orange-100 text-orange-700 font-semibold shadow-md transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400" data-tab="dashboard" type="button">
+      <i class="fas fa-tachometer-alt mr-3 text-lg">
+      </i>
+      Dashboard
+     </button>
+     <button class="flex items-center w-full px-3 py-2 rounded-md text-gray-600 hover:text-orange-700 hover:bg-orange-50 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400" data-tab="clients" type="button">
+      <i class="fas fa-users mr-3 text-lg">
+      </i>
+      Clients
+     </button>
+     <button class="flex items-center w-full px-3 py-2 rounded-md text-gray-600 hover:text-orange-700 hover:bg-orange-50 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400" data-tab="cases" type="button">
+      <i class="fas fa-briefcase mr-3 text-lg">
+      </i>
+      Cases
+     </button>
+     <button class="flex items-center w-full px-3 py-2 rounded-md text-gray-600 hover:text-orange-700 hover:bg-orange-50 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400" data-tab="appointments" type="button">
+      <i class="fas fa-calendar-alt mr-3 text-lg">
+      </i>
+      Appointments
+     </button>
+     <button class="flex items-center w-full px-3 py-2 rounded-md text-gray-600 hover:text-orange-700 hover:bg-orange-50 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400" data-tab="billing" type="button">
+      <i class="fas fa-file-invoice-dollar mr-3 text-lg">
+      </i>
+      Billing
+     </button>
+     <button class="flex items-center w-full px-3 py-2 rounded-md text-gray-600 hover:text-orange-700 hover:bg-orange-50 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400" data-tab="settings" type="button">
+      <i class="fas fa-cog mr-3 text-lg">
+      </i>
+      Settings
+     </button>
+    </nav>
+    <div class="px-4 py-4 border-t border-gray-200 flex items-center space-x-3">
+     <img alt="Avatar of John Doe, a professional lawyer with short brown hair and glasses" class="h-10 w-10 rounded-full border-2 border-orange-500" height="40" src="https://storage.googleapis.com/a1aa/image/3c597c5f-7ca7-4409-b89e-f16e2921068a.jpg" width="40"/>
+     <div>
+      <p class="text-orange-600 font-semibold">
+       John Doe
+      </p>
+      <p class="text-gray-500 text-sm">
+       Senior Lawyer
+      </p>
+     </div>
+     <button aria-label="Logout" class="ml-auto text-orange-400 hover:text-orange-600 transition focus:outline-none focus:ring-2 focus:ring-orange-400">
+      <i class="fas fa-sign-out-alt text-lg">
+      </i>
+     </button>
+    </div>
+   </aside>
+   <!-- Main content -->
+   <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Topbar -->
+    <header class="flex items-center justify-between bg-white shadow-md px-6 h-16 flex-shrink-0 border-b border-gray-200">
+     <button aria-label="Toggle sidebar" class="md:hidden text-orange-400 hover:text-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400" id="sidebarToggle" type="button">
+      <i class="fas fa-bars text-2xl">
+      </i>
+     </button>
+     <h2 class="text-xl font-semibold text-gray-800 select-none" id="currentTabTitle">
+      Dashboard
+     </h2>
+     <div class="relative w-64 hidden md:block">
+      <input aria-label="Search clients, cases" class="w-full rounded-md border border-gray-300 placeholder-gray-400 text-gray-700 py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition" id="searchInput" placeholder="Search clients, cases..." type="search"/>
+      <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+      </i>
+     </div>
+     <div class="flex items-center space-x-4">
+      <button aria-label="Notifications" class="relative text-orange-400 hover:text-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400" type="button">
+       <i class="fas fa-bell text-xl">
+       </i>
+       <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-500 rounded-full ring-2 ring-white">
+       </span>
+      </button>
+      <img alt="Avatar of John Doe, a professional lawyer with short brown hair and glasses" class="h-10 w-10 rounded-full border-2 border-orange-500 cursor-pointer" height="40" src="https://storage.googleapis.com/a1aa/image/3c597c5f-7ca7-4409-b89e-f16e2921068a.jpg" width="40"/>
+     </div>
+    </header>
+    <!-- Content area -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+     <!-- Tabs content container -->
+     <section aria-live="polite" class="fade-slide-enter-active" id="dashboardTab" role="region" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-800 select-none">
+       Dashboard Overview
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+       <!-- Total Clients -->
+       <div class="bg-white rounded-xl p-6 shadow-md border border-orange-200 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="uppercase font-semibold tracking-wide text-orange-600">
+           Total Clients
+          </p>
+          <p class="text-3xl font-bold text-gray-800 mt-2">
+           128
+          </p>
+         </div>
+         <div class="p-3 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-white shadow-lg">
+          <i class="fas fa-users fa-lg">
+          </i>
+         </div>
+        </div>
+        <p class="mt-3 text-green-600 flex items-center space-x-1 select-none font-semibold">
+         <i class="fas fa-arrow-up">
+         </i>
+         <span>
+          +8.5% since last month
+         </span>
+        </p>
+       </div>
+       <!-- Monthly Revenue -->
+       <div class="bg-white rounded-xl p-6 shadow-md border border-orange-200 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="uppercase font-semibold tracking-wide text-orange-600">
+           Monthly Revenue
+          </p>
+          <p class="text-3xl font-bold text-gray-800 mt-2">
+           $42,350
+          </p>
+         </div>
+         <div class="p-3 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-white shadow-lg">
+          <i class="fas fa-dollar-sign fa-lg">
+          </i>
+         </div>
+        </div>
+        <p class="mt-3 text-green-600 flex items-center space-x-1 select-none font-semibold">
+         <i class="fas fa-arrow-up">
+         </i>
+         <span>
+          +12.3% since last month
+         </span>
+        </p>
+       </div>
+       <!-- Active Cases -->
+       <div class="bg-white rounded-xl p-6 shadow-md border border-orange-200 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="uppercase font-semibold tracking-wide text-orange-600">
+           Active Cases
+          </p>
+          <p class="text-3xl font-bold text-gray-800 mt-2">
+           34
+          </p>
+         </div>
+         <div class="p-3 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-white shadow-lg">
+          <i class="fas fa-briefcase fa-lg">
+          </i>
+         </div>
+        </div>
+        <p class="mt-3 text-red-600 flex items-center space-x-1 select-none font-semibold">
+         <i class="fas fa-arrow-down">
+         </i>
+         <span>
+          -3.1% since last month
+         </span>
+        </p>
+       </div>
+       <!-- Appointments -->
+       <div class="bg-white rounded-xl p-6 shadow-md border border-orange-200 transform transition hover:scale-105 hover:shadow-lg">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="uppercase font-semibold tracking-wide text-orange-600">
+           Appointments
+          </p>
+          <p class="text-3xl font-bold text-gray-800 mt-2">
+           18
+          </p>
+         </div>
+         <div class="p-3 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-white shadow-lg">
+          <i class="fas fa-calendar-alt fa-lg">
+          </i>
+         </div>
+        </div>
+        <p class="mt-3 text-green-600 flex items-center space-x-1 select-none font-semibold">
+         <i class="fas fa-arrow-up">
+         </i>
+         <span>
+          +5.7% since last month
+         </span>
+        </p>
+       </div>
+      </div>
+      <section aria-labelledby="recent-activity-title" class="mt-10">
+       <h4 class="text-xl font-semibold mb-6 text-gray-800 select-none" id="recent-activity-title">
+        Recent Activity
+       </h4>
+       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Latest Clients -->
+        <div class="bg-white rounded-xl p-6 shadow-md border border-orange-200 overflow-hidden">
+         <h5 class="text-lg font-semibold text-gray-800 mb-4 select-none">
+          Latest Clients
+         </h5>
+         <ul class="space-y-4 max-h-72 overflow-y-auto pr-2">
+          <li class="flex items-center space-x-4 p-2 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <img alt="Avatar of Alice Smith, a young female client with curly black hair and glasses" class="h-12 w-12 rounded-full border-2 border-orange-500" height="48" src="https://storage.googleapis.com/a1aa/image/652d9fa5-92ef-455f-5466-6d5ab5232cb1.jpg" width="48"/>
+           <div class="flex-1">
+            <p class="text-gray-800 font-semibold">
+             Alice Smith
+            </p>
+            <p class="text-gray-500 text-sm">
+             alice.smith@email.com
+            </p>
+           </div>
+           <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-600 text-white select-none">
+            Active
+           </span>
+          </li>
+          <li class="flex items-center space-x-4 p-2 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <img alt="Avatar of Bob Martin, a middle-aged male client with short brown hair and beard" class="h-12 w-12 rounded-full border-2 border-orange-500" height="48" src="https://storage.googleapis.com/a1aa/image/3e726e46-8936-4ee3-0894-978873b7e43e.jpg" width="48"/>
+           <div class="flex-1">
+            <p class="text-gray-800 font-semibold">
+             Bob Martin
+            </p>
+            <p class="text-gray-500 text-sm">
+             bob.martin@email.com
+            </p>
+           </div>
+           <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500 text-white select-none">
+            Pending
+           </span>
+          </li>
+          <li class="flex items-center space-x-4 p-2 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <img alt="Avatar of Carla Reyes, a female client with long straight blonde hair" class="h-12 w-12 rounded-full border-2 border-orange-500" height="48" src="https://storage.googleapis.com/a1aa/image/4b05711b-215d-4a9b-238b-5cbfb38b94b4.jpg" width="48"/>
+           <div class="flex-1">
+            <p class="text-gray-800 font-semibold">
+             Carla Reyes
+            </p>
+            <p class="text-gray-500 text-sm">
+             carla.reyes@email.com
+            </p>
+           </div>
+           <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-red-600 text-white select-none">
+            Closed
+           </span>
+          </li>
+          <li class="flex items-center space-x-4 p-2 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <img alt="Avatar of Daniel Lee, a young male client with short black hair and a friendly smile" class="h-12 w-12 rounded-full border-2 border-orange-500" height="48" src="https://storage.googleapis.com/a1aa/image/87fc921f-c98f-4758-4d4c-9ac2fb0cb45f.jpg" width="48"/>
+           <div class="flex-1">
+            <p class="text-gray-800 font-semibold">
+             Daniel Lee
+            </p>
+            <p class="text-gray-500 text-sm">
+             daniel.lee@email.com
+            </p>
+           </div>
+           <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-600 text-white select-none">
+            Active
+           </span>
+          </li>
+          <li class="flex items-center space-x-4 p-2 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <img alt="Avatar of Emily Moore, a female client with medium-length red hair and glasses" class="h-12 w-12 rounded-full border-2 border-orange-500" height="48" src="https://storage.googleapis.com/a1aa/image/bdbadaf6-34f5-4a37-97c0-8b51f5aea4af.jpg" width="48"/>
+           <div class="flex-1">
+            <p class="text-gray-800 font-semibold">
+             Emily Moore
+            </p>
+            <p class="text-gray-500 text-sm">
+             emily.moore@email.com
+            </p>
+           </div>
+           <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500 text-white select-none">
+            Pending
+           </span>
+          </li>
+         </ul>
+        </div>
+        <!-- Upcoming Appointments -->
+        <div class="bg-white rounded-xl p-6 shadow-md border border-orange-200 overflow-hidden">
+         <h5 class="text-lg font-semibold text-gray-800 mb-4 select-none">
+          Upcoming Appointments
+         </h5>
+         <ul class="space-y-4 max-h-72 overflow-y-auto pr-2">
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div class="flex items-center space-x-3">
+            <img alt="Avatar of Alice Smith, a young female client with curly black hair and glasses" class="h-10 w-10 rounded-full border-2 border-orange-500" height="40" src="https://storage.googleapis.com/a1aa/image/652d9fa5-92ef-455f-5466-6d5ab5232cb1.jpg" width="40"/>
+            <div>
+             <p class="text-gray-800 font-semibold">
+              Alice Smith
+             </p>
+             <p class="text-gray-500 text-sm">
+              Consultation
+             </p>
+            </div>
+           </div>
+           <time class="text-gray-500 font-semibold select-none" datetime="2024-07-01T10:00">
+            Jul 1, 10:00 AM
+           </time>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div class="flex items-center space-x-3">
+            <img alt="Avatar of Bob Martin, a middle-aged male client with short brown hair and beard" class="h-10 w-10 rounded-full border-2 border-orange-500" height="40" src="https://storage.googleapis.com/a1aa/image/3e726e46-8936-4ee3-0894-978873b7e43e.jpg" width="40"/>
+            <div>
+             <p class="text-gray-800 font-semibold">
+              Bob Martin
+             </p>
+             <p class="text-gray-500 text-sm">
+              Case Review
+             </p>
+            </div>
+           </div>
+           <time class="text-gray-500 font-semibold select-none" datetime="2024-07-02T14:30">
+            Jul 2, 2:30 PM
+           </time>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div class="flex items-center space-x-3">
+            <img alt="Avatar of Daniel Lee, a young male client with short black hair and a friendly smile" class="h-10 w-10 rounded-full border-2 border-orange-500" height="40" src="https://storage.googleapis.com/a1aa/image/87fc921f-c98f-4758-4d4c-9ac2fb0cb45f.jpg" width="40"/>
+            <div>
+             <p class="text-gray-800 font-semibold">
+              Daniel Lee
+             </p>
+             <p class="text-gray-500 text-sm">
+              Contract Signing
+             </p>
+            </div>
+           </div>
+           <time class="text-gray-500 font-semibold select-none" datetime="2024-07-03T09:00">
+            Jul 3, 9:00 AM
+           </time>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div class="flex items-center space-x-3">
+            <img alt="Avatar of Emily Moore, a female client with medium-length red hair and glasses" class="h-10 w-10 rounded-full border-2 border-orange-500" height="40" src="https://storage.googleapis.com/a1aa/image/bdbadaf6-34f5-4a37-97c0-8b51f5aea4af.jpg" width="40"/>
+            <div>
+             <p class="text-gray-800 font-semibold">
+              Emily Moore
+             </p>
+             <p class="text-gray-500 text-sm">
+              Legal Advice
+             </p>
+            </div>
+           </div>
+           <time class="text-gray-500 font-semibold select-none" datetime="2024-07-04T11:15">
+            Jul 4, 11:15 AM
+           </time>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div class="flex items-center space-x-3">
+            <img alt="Avatar of Carla Reyes, a female client with long straight blonde hair" class="h-10 w-10 rounded-full border-2 border-orange-500" height="40" src="https://storage.googleapis.com/a1aa/image/4b05711b-215d-4a9b-238b-5cbfb38b94b4.jpg" width="40"/>
+            <div>
+             <p class="text-gray-800 font-semibold">
+              Carla Reyes
+             </p>
+             <p class="text-gray-500 text-sm">
+              Court Hearing
+             </p>
+            </div>
+           </div>
+           <time class="text-gray-500 font-semibold select-none" datetime="2024-07-05T15:00">
+            Jul 5, 3:00 PM
+           </time>
+          </li>
+         </ul>
+        </div>
+        <!-- Recent Invoices -->
+        <div class="bg-white rounded-xl p-6 shadow-md border border-orange-200 overflow-hidden">
+         <h5 class="text-lg font-semibold text-gray-800 mb-4 select-none">
+          Recent Invoices
+         </h5>
+         <ul class="space-y-4 max-h-72 overflow-y-auto pr-2">
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div>
+            <p class="text-gray-800 font-semibold">
+             Invoice #1023
+            </p>
+            <p class="text-gray-500 text-sm">
+             Alice Smith
+            </p>
+           </div>
+           <div class="text-right">
+            <p class="text-gray-800 font-semibold">
+             $1,200
+            </p>
+            <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-green-600 text-white select-none">
+             Paid
+            </span>
+           </div>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div>
+            <p class="text-gray-800 font-semibold">
+             Invoice #1024
+            </p>
+            <p class="text-gray-500 text-sm">
+             Bob Martin
+            </p>
+           </div>
+           <div class="text-right">
+            <p class="text-gray-800 font-semibold">
+             $850
+            </p>
+            <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-500 text-white select-none">
+             Pending
+            </span>
+           </div>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div>
+            <p class="text-gray-800 font-semibold">
+             Invoice #1025
+            </p>
+            <p class="text-gray-500 text-sm">
+             Carla Reyes
+            </p>
+           </div>
+           <div class="text-right">
+            <p class="text-gray-800 font-semibold">
+             $2,400
+            </p>
+            <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-red-600 text-white select-none">
+             Overdue
+            </span>
+           </div>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div>
+            <p class="text-gray-800 font-semibold">
+             Invoice #1026
+            </p>
+            <p class="text-gray-500 text-sm">
+             Daniel Lee
+            </p>
+           </div>
+           <div class="text-right">
+            <p class="text-gray-800 font-semibold">
+             $1,100
+            </p>
+            <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-green-600 text-white select-none">
+             Paid
+            </span>
+           </div>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded-md hover:bg-orange-50 transition cursor-pointer">
+           <div>
+            <p class="text-gray-800 font-semibold">
+             Invoice #1027
+            </p>
+            <p class="text-gray-500 text-sm">
+             Emily Moore
+            </p>
+           </div>
+           <div class="text-right">
+            <p class="text-gray-800 font-semibold">
+             $950
+            </p>
+            <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-500 text-white select-none">
+             Pending
+            </span>
+           </div>
+          </li>
+         </ul>
+        </div>
+       </div>
+      </section>
+     </section>
+     <!-- Clients Tab -->
+     <section aria-live="polite" class="hidden fade-slide-enter-active" id="clientsTab" role="region" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-800 select-none">
+       Client Management
+      </h3>
+      <div class="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+       <input aria-label="Search clients by name, email, or case type" class="w-full sm:w-1/3 rounded-md border border-gray-300 placeholder-gray-400 text-gray-700 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition" id="clientSearch" placeholder="Search clients by name, email, or case type" type="text"/>
+       <div class="flex space-x-3 overflow-x-auto">
+        <button class="status-filter px-4 py-2 rounded-md bg-gradient-to-tr from-orange-400 to-orange-600 text-white font-semibold shadow-md hover:scale-105 transform transition focus:outline-none focus:ring-2 focus:ring-orange-400" data-status="All" type="button">
+         All
+        </button>
+        <button class="status-filter px-4 py-2 rounded-md bg-green-600 text-white font-semibold shadow-md hover:scale-105 transform transition focus:outline-none focus:ring-2 focus:ring-orange-400" data-status="Active" type="button">
+         Active
+        </button>
+        <button class="status-filter px-4 py-2 rounded-md bg-yellow-500 text-white font-semibold shadow-md hover:scale-105 transform transition focus:outline-none focus:ring-2 focus:ring-orange-400" data-status="Pending" type="button">
+         Pending
+        </button>
+        <button class="status-filter px-4 py-2 rounded-md bg-red-600 text-white font-semibold shadow-md hover:scale-105 transform transition focus:outline-none focus:ring-2 focus:ring-orange-400" data-status="Closed" type="button">
+         Closed
+        </button>
+       </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-y-auto max-h-[65vh]" id="clientGrid">
+       <!-- Client Card 1 -->
+       <div aria-label="Client Alice Smith, active status, case Contract Dispute, revenue twelve thousand five hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Active" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of Alice Smith, a young female client with curly black hair and glasses" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/652d9fa5-92ef-455f-5466-6d5ab5232cb1.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           Alice Smith
+          </h4>
+          <p class="text-gray-500 text-sm">
+           alice.smith@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Contract Dispute
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-600 text-white select-none">
+          Active
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $12,500
+         </p>
+        </div>
+       </div>
+       <!-- Client Card 2 -->
+       <div aria-label="Client Bob Martin, pending status, case Property Settlement, revenue seven thousand eight hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Pending" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of Bob Martin, a middle-aged male client with short brown hair and beard" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/3e726e46-8936-4ee3-0894-978873b7e43e.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           Bob Martin
+          </h4>
+          <p class="text-gray-500 text-sm">
+           bob.martin@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Property Settlement
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500 text-white select-none">
+          Pending
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $7,800
+         </p>
+        </div>
+       </div>
+       <!-- Client Card 3 -->
+       <div aria-label="Client Carla Reyes, closed status, case Personal Injury, revenue fifteen thousand two hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Closed" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of Carla Reyes, a female client with long straight blonde hair" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/4b05711b-215d-4a9b-238b-5cbfb38b94b4.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           Carla Reyes
+          </h4>
+          <p class="text-gray-500 text-sm">
+           carla.reyes@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Personal Injury
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-red-600 text-white select-none">
+          Closed
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $15,200
+         </p>
+        </div>
+       </div>
+       <!-- Client Card 4 -->
+       <div aria-label="Client Daniel Lee, active status, case Employment Law, revenue nine thousand four hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Active" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of Daniel Lee, a young male client with short black hair and a friendly smile" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/87fc921f-c98f-4758-4d4c-9ac2fb0cb45f.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           Daniel Lee
+          </h4>
+          <p class="text-gray-500 text-sm">
+           daniel.lee@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Employment Law
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-600 text-white select-none">
+          Active
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $9,400
+         </p>
+        </div>
+       </div>
+       <!-- Client Card 5 -->
+       <div aria-label="Client Emily Moore, pending status, case Family Law, revenue six thousand seven hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Pending" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of Emily Moore, a female client with medium-length red hair and glasses" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/bdbadaf6-34f5-4a37-97c0-8b51f5aea4af.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           Emily Moore
+          </h4>
+          <p class="text-gray-500 text-sm">
+           emily.moore@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Family Law
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500 text-white select-none">
+          Pending
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $6,700
+         </p>
+        </div>
+       </div>
+       <!-- Client Card 6 -->
+       <div aria-label="Client John Smith, active status, case Criminal Defense, revenue eleven thousand three hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Active" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of John Smith, a middle-aged male client with salt and pepper hair and glasses" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/24e7e1c7-cef7-4974-e6a5-41b40ae47e28.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           John Smith
+          </h4>
+          <p class="text-gray-500 text-sm">
+           john.smith@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Criminal Defense
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-600 text-white select-none">
+          Active
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $11,300
+         </p>
+        </div>
+       </div>
+       <!-- Client Card 7 -->
+       <div aria-label="Client Karen White, closed status, case Immigration, revenue eight thousand nine hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Closed" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of Karen White, a female client with short blonde hair and a confident smile" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/cb9c8117-de6c-4915-de15-2a70316492e3.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           Karen White
+          </h4>
+          <p class="text-gray-500 text-sm">
+           karen.white@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Immigration
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-red-600 text-white select-none">
+          Closed
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $8,900
+         </p>
+        </div>
+       </div>
+       <!-- Client Card 8 -->
+       <div aria-label="Client Michael Thompson, pending status, case Business Law, revenue five thousand six hundred dollars" class="client-card bg-white rounded-xl p-5 shadow-md border border-orange-200 cursor-pointer transform transition hover:scale-105 hover:shadow-lg" data-status="Pending" role="article" tabindex="0">
+        <div class="flex items-center space-x-4">
+         <img alt="Avatar of Michael Thompson, a male client with short dark hair and a beard" class="h-16 w-16 rounded-full border-2 border-orange-500" height="64" src="https://storage.googleapis.com/a1aa/image/8fa99301-b9f3-4366-e5ca-e51c7f1951bd.jpg" width="64"/>
+         <div class="flex-1">
+          <h4 class="text-gray-800 font-semibold text-lg">
+           Michael Thompson
+          </h4>
+          <p class="text-gray-500 text-sm">
+           michael.thompson@email.com
+          </p>
+          <p class="text-gray-500 text-sm mt-1">
+           Case: Business Law
+          </p>
+         </div>
+         <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500 text-white select-none">
+          Pending
+         </span>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+         <p class="text-gray-500 text-sm">
+          Revenue:
+         </p>
+         <p class="text-gray-800 font-semibold">
+          $5,600
+         </p>
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- Placeholder tabs for Cases, Appointments, Billing, Settings -->
+     <section aria-live="polite" class="hidden fade-slide-enter-active" id="casesTab" role="region" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-800 select-none">
+       Cases
+      </h3>
+      <p class="text-gray-600">
+       This section will contain case management features and details.
+      </p>
+     </section>
+     <section aria-live="polite" class="hidden fade-slide-enter-active" id="appointmentsTab" role="region" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-800 select-none">
+       Appointments
+      </h3>
+      <p class="text-gray-600">
+       This section will contain appointment scheduling and tracking.
+      </p>
+     </section>
+     <section aria-live="polite" class="hidden fade-slide-enter-active" id="billingTab" role="region" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-800 select-none">
+       Billing
+      </h3>
+      <p class="text-gray-600">
+       This section will contain billing and invoice management.
+      </p>
+     </section>
+     <section aria-live="polite" class="hidden fade-slide-enter-active" id="settingsTab" role="region" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-800 select-none">
+       Settings
+      </h3>
+      <p class="text-gray-600">
+       This section will contain user and application settings.
+      </p>
+     </section>
+    </main>
+   </div>
+  </div>
+  <script>
+   // Sidebar toggle for mobile
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+    });
+
+    // Tabs navigation
+    const tabButtons = document.querySelectorAll('aside nav button[data-tab]');
+    const tabs = {
+      dashboard: document.getElementById('dashboardTab'),
+      clients: document.getElementById('clientsTab'),
+      cases: document.getElementById('casesTab'),
+      appointments: document.getElementById('appointmentsTab'),
+      billing: document.getElementById('billingTab'),
+      settings: document.getElementById('settingsTab'),
+    };
+    const currentTabTitle = document.getElementById('currentTabTitle');
+
+    function setActiveTab(tabName) {
+      // Update tab content visibility
+      Object.entries(tabs).forEach(([key, el]) => {
+        if (key === tabName) {
+          el.classList.remove('hidden');
+          el.classList.add('fade-slide-enter-active');
+          el.setAttribute('tabindex', '0');
+          el.focus();
+        } else {
+          el.classList.add('hidden');
+          el.classList.remove('fade-slide-enter-active');
+          el.setAttribute('tabindex', '-1');
+        }
+      });
+      // Update sidebar button active state
+      tabButtons.forEach((btn) => {
+        if (btn.getAttribute('data-tab') === tabName) {
+          btn.classList.add('bg-orange-100', 'text-orange-700', 'font-semibold', 'shadow-md');
+          btn.classList.remove('text-gray-600', 'hover:text-orange-700', 'hover:bg-orange-50');
+          btn.setAttribute('aria-current', 'page');
+        } else {
+          btn.classList.remove('bg-orange-100', 'text-orange-700', 'font-semibold', 'shadow-md');
+          btn.classList.add('text-gray-600', 'hover:text-orange-700', 'hover:bg-orange-50');
+          btn.removeAttribute('aria-current');
+        }
+      });
+      // Update topbar title
+      const titleMap = {
+        dashboard: 'Dashboard',
+        clients: 'Clients',
+        cases: 'Cases',
+        appointments: 'Appointments',
+        billing: 'Billing',
+        settings: 'Settings',
+      };
+      currentTabTitle.textContent = titleMap[tabName] || '';
+    }
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        setActiveTab(btn.getAttribute('data-tab'));
+        if (window.innerWidth < 768) {
+          sidebar.classList.add('-translate-x-full');
+        }
+      });
+    });
+
+    // Initialize default tab
+    setActiveTab('dashboard');
+
+    // Client search and filter (only on clients tab)
+    const clientSearch = document.getElementById('clientSearch');
+    const statusFilters = document.querySelectorAll('#clientsTab .status-filter');
+    const clientGrid = document.getElementById('clientGrid');
+    const clientCards = clientGrid.querySelectorAll('.client-card');
+
+    let currentStatusFilter = 'All';
+
+    function filterClients() {
+      const searchTerm = clientSearch.value.toLowerCase();
+
+      clientCards.forEach((card) => {
+        const name = card.querySelector('h4').textContent.toLowerCase();
+        const email = card.querySelector('p.text-gray-500').textContent.toLowerCase();
+        const caseType = card.querySelector('p.text-gray-500.mt-1').textContent.toLowerCase();
+        const status = card.getAttribute('data-status');
+
+        const matchesSearch =
+          name.includes(searchTerm) ||
+          email.includes(searchTerm) ||
+          caseType.includes(searchTerm);
+
+        const matchesStatus =
+          currentStatusFilter === 'All' || status === currentStatusFilter;
+
+        if (matchesSearch && matchesStatus) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    if(clientSearch){
+      clientSearch.addEventListener('input', filterClients);
+    }
+
+    statusFilters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentStatusFilter = btn.getAttribute('data-status');
+
+        statusFilters.forEach((b) => {
+          b.classList.remove('ring-2', 'ring-orange-400');
+          b.classList.remove('scale-110');
+        });
+
+        btn.classList.add('ring-2', 'ring-orange-400', 'scale-110');
+
+        filterClients();
+      });
+    });
+
+    // Initialize with "All" filter selected
+    statusFilters.forEach((btn) => {
+      if (btn.getAttribute('data-status') === 'All') {
+        btn.classList.add('ring-2', 'ring-orange-400', 'scale-110');
+      }
+    });
+  </script>
+ </body>
+</html>
