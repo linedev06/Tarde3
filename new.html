@@ -1,0 +1,600 @@
+<html lang="pt-br">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   fila virtual
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
+  <style>
+   /* Custom scrollbar for mobile menu */
+   ::-webkit-scrollbar {
+    width: 6px;
+   }
+   ::-webkit-scrollbar-track {
+    background: transparent;
+   }
+   ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 154, 0, 0.7);
+    border-radius: 3px;
+   }
+   /* Reduce vertical spacing on mobile for main sections */
+   @media (max-width: 767px) {
+    section {
+     padding-top: 1.5rem !important;
+     padding-bottom: 1.5rem !important;
+    }
+    .login-section {
+     padding-top: 2rem !important;
+     padding-bottom: 2rem !important;
+     min-height: auto !important;
+    }
+    .tutorial-section {
+     padding-top: 2rem !important;
+     padding-bottom: 2rem !important;
+    }
+    .form-container {
+     padding: 1.5rem !important;
+    }
+    .swiper {
+     max-height: 280px !important;
+    }
+    .swiper-slide img {
+     max-height: 280px !important;
+     object-fit: cover;
+    }
+    .left-section, .right-section {
+     width: 100% !important;
+     padding: 1.5rem !important;
+    }
+    .right-section img {
+     width: 80% !important;
+     max-width: 280px !important;
+     height: auto !important;
+    }
+    .left-section h2 {
+     font-size: 1.75rem !important;
+    }
+    .left-section p {
+     font-size: 1rem !important;
+    }
+    .left-section blockquote {
+     font-size: 1rem !important;
+     padding: 1rem !important;
+    }
+    .login-box {
+     padding: 2rem !important;
+     width: 100% !important;
+     border-radius: 1rem !important;
+     box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+    }
+    .login-box h2 {
+     font-size: 2rem !important;
+     margin-bottom: 1.5rem !important;
+    }
+    .login-box form > div {
+     margin-bottom: 1.25rem !important;
+    }
+    .login-box input {
+     font-size: 1rem !important;
+     padding: 0.75rem 1rem !important;
+    }
+    .login-box button {
+     font-size: 1.1rem !important;
+     padding: 0.75rem 0 !important;
+    }
+    /* Reduce grid gaps in project categories */
+    #cima, #centro {
+     gap: 1.5rem !important;
+    }
+    /* Reduce padding in project categories */
+    .project-category {
+     padding: 1.5rem !important;
+    }
+    /* Reduce padding in cards */
+    #conteudo0 > div:first-child {
+     padding: 1.5rem !important;
+    }
+    /* Reduce padding in project recommendation form */
+    .form-container {
+     max-width: 100% !important;
+     padding: 1.5rem !important;
+    }
+    /* Mobile: stack project cards vertically */
+    #tdquadrado {
+     display: flex !important;
+     flex-direction: column !important;
+     gap: 1.5rem !important;
+     max-width: 100% !important;
+     width: 100% !important;
+    }
+    #tdquadrado > a {
+     width: 100% !important;
+     max-width: none !important;
+    }
+   }
+  </style>
+ </head>
+ <body class="bg-white font-['Roboto'] text-gray-800">
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 opacity-95">
+   <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 relative" id="icones">
+    <a aria-label="Logo Tekton" class="flex items-center" href="#conteudo1">
+     <img alt="Logo da Tekton, estilizado em branco e laranja, representando arquitetura moderna" class="h-10 w-auto" height="40" src="https://storage.googleapis.com/a1aa/image/f457561f-7249-433f-3ba6-cf9fa76bb751.jpg" width="80"/>
+    </a>
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex space-x-10 font-semibold text-gray-700 tracking-wide">
+     <a class="text-orange-500 border-b-2 border-orange-500 pb-1 transition-colors duration-300 hover:text-orange-600" href="#hobby" id="home">
+      Home
+     </a>
+     <a class="hover:text-orange-500 transition-colors duration-300" href="#login-selec" id="sobre">
+      Sobre
+     </a>
+     <a class="hover:text-orange-500 transition-colors duration-300" href="contato.html" id="contato">
+      Contato
+     </a>
+    </div>
+    <!-- Social Icons Desktop -->
+    <div class="hidden md:flex space-x-5 text-gray-600">
+     <a aria-label="GitHub" class="hover:text-orange-500 transition-colors duration-300" href="https://github.com/linedev06" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-github fa-lg"></i>
+     </a>
+     <a aria-label="LinkedIn" class="hover:text-orange-500 transition-colors duration-300" href="#" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-linkedin fa-lg"></i>
+     </a>
+     <a aria-label="Facebook" class="hover:text-orange-500 transition-colors duration-300" href="#" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-facebook fa-lg"></i>
+     </a>
+     <a aria-label="Instagram" class="hover:text-orange-500 transition-colors duration-300" href="https://www.instagram.com/tekton.pjt/" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-instagram fa-lg"></i>
+     </a>
+    </div>
+    <!-- Hamburger Button Mobile -->
+    <button aria-label="Abrir menu" class="md:hidden z-50 focus:outline-none" id="menu-btn" type="button">
+     <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+      <line x1="3" x2="21" y1="6" y2="6"></line>
+      <line x1="3" x2="21" y1="12" y2="12"></line>
+      <line x1="3" x2="21" y1="18" y2="18"></line>
+     </svg>
+    </button>
+   </div>
+   <!-- Mobile Menu -->
+   <div class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm hidden" id="menu-overlay"></div>
+   <div aria-labelledby="mobile-menu-label" aria-modal="true" class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-40" id="mobile-menu" role="dialog" tabindex="-1">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+     <h2 class="text-xl font-bold text-orange-600" id="mobile-menu-label">Menu</h2>
+     <button aria-label="Fechar menu" class="text-orange-500 hover:text-orange-600 focus:outline-none" id="menu-close-btn" type="button">
+      <svg class="h-8 w-8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+       <line x1="18" x2="6" y1="6" y2="18"></line>
+       <line x1="6" x2="18" y1="6" y2="18"></line>
+      </svg>
+     </button>
+    </div>
+    <nav class="flex flex-col space-y-6 px-6 py-8 text-gray-700 font-semibold text-lg">
+     <a class="hover:text-orange-600 transition-colors duration-200" href="#hobby" id="mobile-home">Home</a>
+     <a class="hover:text-orange-600 transition-colors duration-200" href="#login-selec" id="mobile-sobre">Sobre</a>
+     <a class="hover:text-orange-600 transition-colors duration-200" href="contato.html" id="mobile-contato">Contato</a>
+     <div class="flex space-x-6 mt-8 text-xl text-gray-600">
+      <a aria-label="GitHub" class="hover:text-orange-500 transition-colors duration-300" href="https://github.com/linedev06" rel="noopener noreferrer" target="_blank"><i class="fab fa-github"></i></a>
+      <a aria-label="LinkedIn" class="hover:text-orange-500 transition-colors duration-300" href="#" rel="noopener noreferrer" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a aria-label="Facebook" class="hover:text-orange-500 transition-colors duration-300" href="#" rel="noopener noreferrer" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a aria-label="Instagram" class="hover:text-orange-500 transition-colors duration-300" href="https://www.instagram.com/tekton.pjt/" rel="noopener noreferrer" target="_blank"><i class="fab fa-instagram"></i></a>
+     </div>
+    </nav>
+   </div>
+  </nav>
+  <main class="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   <!-- Conteudo1 -->
+   <section class="my-8" id="conteudo1">
+    <div class="mb-6">
+     <img alt="Imagem de projeto arquitetônico moderno com linhas limpas e cores neutras, fachada de casa contemporânea com grandes janelas e jardim minimalista" class="w-full rounded-3xl shadow-2xl object-cover max-h-[320px] sm:max-h-[400px]" height="320" src="https://storage.googleapis.com/a1aa/image/b6f04c7f-0ea2-4df6-9486-cd8695459bff.jpg" width="1200"/>
+    </div>
+    <div class="bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-300 rounded-3xl p-6 sm:p-8 shadow-xl max-w-4xl mx-auto">
+     <p class="text-gray-800 text-base sm:text-lg leading-relaxed font-medium tracking-wide">
+      Venha explorar a beleza e a inovação dos nossos projetos! Convidamos você a mergulhar em um mundo de design criativo, inteligente e de estética impressionante. Nossa equipe dedicada trabalha incansavelmente para criar ambientes que inspiram e transformam. Junte-se a nós para descobrir o futuro da arquitetura. Seja bem-vindo à Tekton!
+     </p>
+    </div>
+   </section>
+   <!-- O que nós buscamos -->
+   <section class="my-12 px-4 sm:px-0 max-w-5xl mx-auto" id="tudo1">
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-orange-500 text-center sm:text-left mb-6 sm:mb-8 tracking-wide drop-shadow-md">
+     O que nós da Tektõn buscamos?
+    </h1>
+    <p class="text-gray-700 text-base sm:text-lg leading-relaxed text-justify max-w-4xl mx-auto sm:mx-0 mb-12 tracking-wide">
+     Nosso compromisso é proporcionar conforto e qualidade de vida para você e sua família. Nossos empreendimentos são cuidadosamente planejados, com acabamentos diferenciados e foco na sustentabilidade, garantindo não apenas belos espaços, mas também ambientes que se preocupam com o meio ambiente e seu bolso. Aqui na Tektõn, você encontrará muito mais do que projetos, encontrará seu futuro. Tudo em nossa empresa é projetado para tornar sua experiência de moradia ainda mais especial. Venha conhecer nossos projetos e descubra como podemos transformar seus sonhos em realidade.
+    </p>
+    <div class="flex flex-col md:flex-row gap-10 justify-center items-start" id="conteudo0">
+     <div class="bg-gradient-to-tr from-orange-100 to-orange-50 border border-orange-300 rounded-3xl p-6 sm:p-8 max-w-md flex flex-col justify-between shadow-lg hover:shadow-2xl transition-shadow duration-300">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-5 tracking-wide text-orange-600 drop-shadow-sm">
+       Entenda mais sobre os projetos
+      </h2>
+      <hr class="border-orange-400 mb-5 sm:mb-6"/>
+      <p class="text-gray-700 mb-5 sm:mb-6 leading-relaxed tracking-wide text-sm sm:text-base">
+       Inicialmente concebidos como projetos personalizados, agora oferecemos uma ampla variedade de opções prontas para atender às suas necessidades. Comece selecionando um dos projetos disponíveis na Tektõn que melhor se adequa às suas preferências. O projeto básico possui uma estrutura definida, mas permite personalizações conforme desejado. Por outro lado, tanto o projeto modificado quanto o personalizado são opções mais custosas, porém oferecem a oportunidade de colaborar com nossa equipe na criação do projeto ideal para você.
+      </p>
+      <p class="text-gray-700 mb-6 sm:mb-8 tracking-wide text-sm sm:text-base">
+       Se interessou pela Tektõn? Clique em Saiba mais e descubra um pouco sobre a empresa que transforma seus sonhos em realidade!
+      </p>
+      <div>
+       <a aria-label="Saiba mais sobre a Tekton" class="inline-block bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-3xl shadow-lg transition transform hover:scale-105 tracking-wide text-sm sm:text-base" href="Tk.html" role="button">
+        Saiba mais →
+       </a>
+      </div>
+     </div>
+     <div class="grid grid-cols-2 gap-6 max-w-xl w-full md:max-w-none md:grid-cols-2" id="tdquadrado">
+      <a aria-label="Modelos prontos" class="flex flex-col items-center bg-white border border-gray-200 rounded-3xl shadow-md hover:shadow-xl transition p-4 sm:p-5 group" href="modelosp.html">
+       <img alt="Imagem de casa moderna pronta, fachada com grandes janelas e jardim bem cuidado" class="mb-3 sm:mb-4 rounded-2xl w-full object-cover h-40 sm:h-48 group-hover:scale-105 transition-transform duration-300" height="180" src="https://storage.googleapis.com/a1aa/image/82008cbc-4761-40fd-b948-c38d01e3afe1.jpg" width="180"/>
+       <p class="text-center font-semibold text-gray-800 text-lg group-hover:text-orange-500 transition-colors duration-300 flex items-center justify-center gap-2">
+        <i class="fas fa-home text-orange-500"></i> Modelos prontos
+       </p>
+      </a>
+      <a aria-label="Modelo básico" class="flex flex-col items-center bg-white border border-gray-200 rounded-3xl shadow-md hover:shadow-xl transition p-4 sm:p-5 group" href="confirm.html">
+       <img alt="Imagem de mão segurando planta baixa de projeto básico de arquitetura" class="mb-3 sm:mb-4 rounded-2xl w-full object-cover h-40 sm:h-48 group-hover:scale-105 transition-transform duration-300" height="180" src="https://storage.googleapis.com/a1aa/image/db9f0245-4ccc-4401-ebdb-e65c56d232ed.jpg" width="180"/>
+       <p class="text-center font-semibold text-gray-800 text-lg group-hover:text-orange-500 transition-colors duration-300 flex items-center justify-center gap-2">
+        <i class="fas fa-file-alt text-orange-500"></i> Modelo básico
+       </p>
+      </a>
+      <a aria-label="Projeto modificado" class="flex flex-col items-center bg-white border border-gray-200 rounded-3xl shadow-md hover:shadow-xl transition p-4 sm:p-5 group" href="confirm1.html">
+       <img alt="Imagem de laptop aberto mostrando projeto modificado de arquitetura em tela" class="mb-3 sm:mb-4 rounded-2xl w-full object-cover h-40 sm:h-48 group-hover:scale-105 transition-transform duration-300" height="180" src="https://storage.googleapis.com/a1aa/image/b55a33f0-f8af-42dc-0b73-611a736762f0.jpg" width="180"/>
+       <p class="text-center font-semibold text-gray-800 text-lg group-hover:text-orange-500 transition-colors duration-300 flex items-center justify-center gap-2">
+        <i class="fas fa-edit text-orange-500"></i> Projeto modificado
+       </p>
+      </a>
+      <a aria-label="Projeto personalizado" class="flex flex-col items-center bg-white border border-gray-200 rounded-3xl shadow-md hover:shadow-xl transition p-4 sm:p-5 group" href="confirm2.html">
+       <img alt="Imagem de casa personalizada com design arquitetônico exclusivo e moderno" class="mb-3 sm:mb-4 rounded-2xl w-full object-cover h-40 sm:h-48 group-hover:scale-105 transition-transform duration-300" height="180" src="https://storage.googleapis.com/a1aa/image/1554c33c-fd5f-40b2-11df-d89885ce9a3c.jpg" width="180"/>
+       <p class="text-center font-semibold text-gray-800 text-lg group-hover:text-orange-500 transition-colors duration-300 flex items-center justify-center gap-2">
+        <i class="fas fa-cogs text-orange-500"></i> Projeto personalizado
+       </p>
+      </a>
+     </div>
+    </div>
+   </section>
+   <!-- Project Section -->
+   <section class="bg-gradient-to-tr from-orange-50 to-orange-100 py-12 sm:py-16 px-6 sm:px-8 rounded-3xl max-w-6xl mx-auto my-16 shadow-lg">
+    <div class="project-section max-w-5xl mx-auto">
+     <div class="project-detail mb-10 opacity-0 transition-opacity duration-700 ease-in-out">
+      <p class="text-xl text-gray-700 font-semibold tracking-wide drop-shadow-sm">
+       Descubra o porque você deve escolher a Tektõn.
+      </p>
+      <hr class="border-orange-400 mt-3"/>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 text-gray-700" id="cima">
+      <div class="project-category bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
+       <h3 class="text-2xl font-bold text-orange-600 mb-3 tracking-wide drop-shadow-sm">
+        Profissionalismo:
+       </h3>
+       <p class="leading-relaxed tracking-wide text-sm sm:text-base">
+        “A Tekton é sinônimo de profissionalismo no universo da arquitetura. Nossa equipe é composta por especialistas altamente qualificados que se dedicam a transformar cada projeto em uma obra-prima de precisão e excelência.”
+       </p>
+      </div>
+      <div class="project-category bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
+       <h3 class="text-2xl font-bold text-orange-600 mb-3 tracking-wide drop-shadow-sm">
+        Sustentabilidade:
+       </h3>
+       <p class="leading-relaxed tracking-wide text-sm sm:text-base">
+        “Na Tekton, a sustentabilidade é a pedra angular de cada projeto. Nos comprometemos com práticas ecologicamente corretas, garantindo que nossos designs contribuam para um futuro mais verde e sustentável.”
+       </p>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-gray-700" id="centro">
+      <div class="project-category bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
+       <h3 class="text-2xl font-bold text-orange-600 mb-3 tracking-wide drop-shadow-sm">
+        Concisão:
+       </h3>
+       <p class="leading-relaxed tracking-wide text-sm sm:text-base">
+        “Com a Tekton, a clareza e a concisão são fundamentais. Nossos projetos são meticulosamente planejados para atender às necessidades dos clientes com eficiência, evitando qualquer excesso desnecessário.”
+       </p>
+      </div>
+      <div class="project-category bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
+       <h3 class="text-2xl font-bold text-orange-600 mb-3 tracking-wide drop-shadow-sm">
+        Visão Holística:
+       </h3>
+       <p class="leading-relaxed tracking-wide text-sm sm:text-base">
+        “A abordagem holística da Tekton garante que cada projeto seja considerado em todas as suas facetas, integrando-se harmoniosamente ao seu contexto e ao meio ambiente, para criar espaços que inspiram e enriquecem.”
+       </p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Form and Swiper -->
+   <section class="max-w-5xl mx-auto px-4 sm:px-0 my-16">
+    <div class="form-container bg-gradient-to-r from-orange-50 to-orange-100 p-6 sm:p-8 rounded-3xl shadow-lg max-w-md mx-auto text-center">
+     <p class="text-lg sm:text-xl font-semibold mb-2 tracking-wide">
+      Ainda não se decidiu qual plano escolher?
+     </p>
+     <p class="mb-5 text-gray-700 tracking-wide text-sm sm:text-base">
+      Responda este breve formulário para que possamos recomendar o projeto ideal para você.
+     </p>
+     <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-6">
+      <input aria-label="Valor mínimo" class="controle p-3 sm:p-4 rounded-xl border border-orange-300 focus:outline-none focus:ring-4 focus:ring-orange-400 transition text-base sm:text-lg font-medium" id="minBudget" placeholder="Valor mínimo (R$)" type="number" min="0" step="100"/>
+      <input aria-label="Valor máximo" class="controle p-3 sm:p-4 rounded-xl border border-orange-300 focus:outline-none focus:ring-4 focus:ring-orange-400 transition text-base sm:text-lg font-medium" id="maxBudget" placeholder="Valor máximo (R$)" type="number" min="0" step="100"/>
+     </div>
+     <button aria-label="Recomendar projetos" class="button bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 rounded-3xl shadow-lg transition transform hover:scale-105 tracking-wide text-base sm:text-lg" onclick="recommendProjects()">
+      Projetos recomendados
+     </button>
+     <p aria-live="polite" class="mt-4 sm:mt-5 text-orange-600 font-semibold text-base sm:text-lg tracking-wide" id="result" role="alert"></p>
+    </div>
+    <div class="swiper mySwiper mt-12 rounded-3xl overflow-hidden shadow-2xl max-w-4xl mx-auto max-h-[320px] sm:max-h-[400px]">
+     <div class="swiper-wrapper">
+      <div class="swiper-slide flex justify-center items-center bg-gray-100">
+       <img alt="Projeto arquitetônico 1: fachada moderna com jardim e grandes janelas, dia ensolarado" class="w-full object-cover max-h-[320px] sm:max-h-[400px]" height="320" src="https://storage.googleapis.com/a1aa/image/3e0234de-2779-43ed-803b-28cecf120652.jpg" width="800"/>
+      </div>
+      <div class="swiper-slide flex justify-center items-center bg-gray-100">
+       <img alt="Projeto arquitetônico 2: interior moderno com design minimalista e móveis elegantes, sala ampla" class="w-full object-cover max-h-[320px] sm:max-h-[400px]" height="320" src="https://storage.googleapis.com/a1aa/image/7d9a7b8c-b56f-485b-05cb-da8dc6d1428d.jpg" width="800"/>
+      </div>
+      <div class="swiper-slide flex justify-center items-center bg-gray-100">
+       <img alt="Projeto arquitetônico 3: vista noturna com iluminação decorativa e piscina iluminada" class="w-full object-cover max-h-[320px] sm:max-h-[400px]" height="320" src="https://storage.googleapis.com/a1aa/image/67996473-5d64-414f-ba1a-3a8f077fcaf1.jpg" width="800"/>
+      </div>
+      <div class="swiper-slide flex justify-center items-center bg-gray-100">
+       <img alt="Projeto arquitetônico 4: fachada contemporânea com detalhes em madeira e paisagismo verde" class="w-full object-cover max-h-[320px] sm:max-h-[400px]" height="320" src="https://storage.googleapis.com/a1aa/image/f0866197-4b3a-49de-650d-26be5a0b0c1a.jpg" width="800"/>
+      </div>
+     </div>
+     <div aria-label="Slide anterior" class="swiper-button-prev text-orange-500 hover:text-orange-600"></div>
+     <div aria-label="Próximo slide" class="swiper-button-next text-orange-500 hover:text-orange-600"></div>
+     <div class="swiper-pagination"></div>
+    </div>
+   </section>
+   <!-- Tutorial Section -->
+   <section class="tutorial-section flex flex-col md:flex-row justify-center items-center bg-gradient-to-tr from-orange-50 to-orange-100 py-12 sm:py-20 px-6 sm:px-12 rounded-3xl max-w-7xl mx-auto my-20 shadow-lg gap-12">
+    <!-- Left Section -->
+    <div class="left-section bg-gradient-to-tr from-orange-100 to-orange-50 text-black w-full md:w-2/5 p-8 rounded-3xl shadow-xl flex flex-col justify-center">
+     <h2 class="text-4xl font-extrabold uppercase tracking-widest mb-6 drop-shadow-md text-center md:text-left">
+      Conheça o Nosso App
+     </h2>
+     <p class="text-3xl italic font-semibold text-orange-500 mb-8 tracking-wide drop-shadow-sm text-center md:text-left">
+      Transforme sua vida!
+     </p>
+     <p class="text-lg leading-relaxed mb-10 tracking-wide font-medium text-center md:text-left">
+      Simplifique a gestão dos seus projetos de forma prática e eficiente. Maximize sua produtividade agora mesmo clicando no botão ao lado!
+     </p>
+     <div class="space-y-6">
+      <div class="bg-orange-200 rounded-3xl p-5 shadow-md font-semibold flex items-center gap-5 text-lg tracking-wide drop-shadow-sm">
+       <i class="fas fa-comments text-orange-600 text-4xl select-none"></i>
+       <span>Converse com Seu Arquiteto: Consultas em chat e vídeo para ideias instantâneas.</span>
+      </div>
+      <div class="bg-orange-200 rounded-3xl p-5 shadow-md font-semibold flex items-center gap-5 text-lg tracking-wide drop-shadow-sm">
+       <i class="fas fa-mobile-alt text-orange-600 text-4xl select-none"></i>
+       <span>Facilidade: Galeria de projetos na palma da sua mão.</span>
+      </div>
+      <div class="bg-orange-200 rounded-3xl p-5 shadow-md font-semibold flex items-center gap-5 text-lg tracking-wide drop-shadow-sm">
+       <i class="fas fa-clock text-orange-600 text-4xl select-none"></i>
+       <span>Progresso em Tempo Real: Cronograma interativo e notificações de atualizações.</span>
+      </div>
+     </div>
+     <blockquote class="text-lg bg-orange-200 border-l-8 border-orange-500 rounded-3xl p-6 font-semibold tracking-wide drop-shadow-md mt-10">
+      “Este aplicativo mudou a forma como faço meus projetos. Super intuitivo e prático!” – Usuário Satisfeito
+     </blockquote>
+    </div>
+    <!-- Right Section -->
+    <div class="right-section w-full md:w-3/5 flex justify-center items-center relative px-4 sm:px-6">
+     <img alt="Imagem do app mostrando interface moderna e amigável com telas de projetos arquitetônicos e chat" class="rounded-3xl w-full max-w-[400px] shadow-2xl" height="auto" src="https://storage.googleapis.com/a1aa/image/c8f82ea8-e556-4e96-6093-142c3715c038.jpg" width="400"/>
+     <a aria-label="Instale o App Agora!" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold py-4 px-14 rounded-3xl shadow-2xl hover:from-orange-600 hover:to-orange-700 transition text-lg tracking-wide" href="baixar1.html" role="button">
+      Instale o App Agora!
+     </a>
+    </div>
+   </section>
+   <!-- Login Section -->
+   <section class="login-section flex justify-center items-center py-12 sm:py-20 px-6 bg-gradient-to-br from-orange-50 to-orange-200 min-h-auto sm:min-h-[90vh]" id="login-selec">
+    <div class="login-box bg-white rounded-3xl shadow-2xl p-8 sm:p-12 max-w-md w-full flex flex-col items-center text-center">
+     <h2 class="text-3xl sm:text-5xl font-extrabold text-[#0B1742] mb-6 sm:mb-8 tracking-widest font-sans drop-shadow-md">
+      Área do Arquiteto
+     </h2>
+     <div class="divider w-16 h-2 bg-orange-500 rounded mb-8 sm:mb-12 shadow-md"></div>
+     <form class="w-full space-y-6 sm:space-y-10" novalidate="">
+      <div>
+       <label class="block text-left text-gray-600 font-semibold mb-2 sm:mb-3 font-sans tracking-wide text-sm sm:text-base" for="email">
+        E-mail
+       </label>
+       <input aria-describedby="emailHelp" aria-required="true" class="w-full px-4 py-3 sm:px-6 sm:py-5 border border-gray-300 rounded-3xl text-base sm:text-xl font-sans focus:outline-none focus:ring-4 focus:ring-orange-400 transition tracking-wide" id="email" name="email" placeholder="Digite seu e-mail profissional" required="" type="email"/>
+      </div>
+      <div>
+       <label class="block text-left text-gray-600 font-semibold mb-2 sm:mb-3 font-sans tracking-wide text-sm sm:text-base" for="senha">
+        Senha
+       </label>
+       <input aria-required="true" class="w-full px-4 py-3 sm:px-6 sm:py-5 border border-gray-300 rounded-3xl text-base sm:text-xl font-sans focus:outline-none focus:ring-4 focus:ring-orange-400 transition tracking-wide" id="senha" name="senha" placeholder="Digite sua senha" required="" type="password"/>
+      </div>
+      <div class="flex justify-center">
+       <a aria-label="Entrar na área do arquiteto" class="w-full" href="arqui.html" role="button">
+        <button class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-4 sm:py-5 rounded-3xl text-xl sm:text-2xl shadow-2xl transition transform hover:scale-105 tracking-wide" type="submit">
+         Entrar
+        </button>
+       </a>
+      </div>
+     </form>
+     <a aria-label="Esqueci minha senha" class="mt-6 sm:mt-10 text-orange-500 font-semibold hover:text-orange-600 transition font-sans tracking-wide text-sm sm:text-base" href="recuperar-senha.html" role="link">
+      Esqueci minha senha
+     </a>
+    </div>
+   </section>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-gray-100 text-gray-700 text-center py-8 sm:py-10 mt-20 border-t border-gray-300 tracking-wide text-sm sm:text-base">
+   <p class="mb-2">© 2024 Tekton. Todos os direitos reservados.</p>
+   <p class="mb-2">
+    <a class="text-orange-500 hover:text-orange-600 underline" href="Porque.html" rel="noopener noreferrer" target="_blank">Email:</a> tekton.projetos01@gmail.com
+   </p>
+   <p class="mb-2">
+    Telefone:
+    <a class="text-orange-500 hover:text-orange-600 underline" href="video360.html" rel="noopener noreferrer" target="_blank">(XX)</a> XXXX-XXXX
+   </p>
+   <p>
+    Siga-nos no Instagram:
+    <a class="text-orange-500 hover:text-orange-600 underline" href="https://www.instagram.com/tekton.pjt/" rel="noopener noreferrer" target="_blank">@tekton.pjt</a>
+   </p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+   // Swiper initialization
+   var swiper = new Swiper(".mySwiper", {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      slidesPerView: 1,
+      spaceBetween: 20,
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+        },
+        1024: {
+          slidesPerView: 1,
+          spaceBetween: 40,
+        },
+      },
+    });
+
+    // Project recommendation logic
+    function recommendProjects() {
+      const minBudget = parseFloat(
+        document.getElementById("minBudget").value.trim()
+      );
+      const maxBudget = parseFloat(
+        document.getElementById("maxBudget").value.trim()
+      );
+
+      let recommendation = "";
+
+      if (isNaN(minBudget) || isNaN(maxBudget) || minBudget > maxBudget || minBudget < 0 || maxBudget < 0) {
+        recommendation =
+          "Por favor, insira valores válidos para o orçamento mínimo e máximo.";
+      } else if (minBudget >= 1000 && maxBudget <= 100000) {
+        const projectA = 7500;
+        recommendation = `Nós recomendamos o projeto A, com o valor ${projectA.toLocaleString(
+          "pt-BR",
+          { style: "currency", currency: "BRL" }
+        )}`;
+      } else if (minBudget >= 1000 && maxBudget <= 200000) {
+        const projectB = 15000;
+        recommendation = `Nós recomendamos o projeto B, com o valor ${projectB.toLocaleString(
+          "pt-BR",
+          { style: "currency", currency: "BRL" }
+        )}`;
+      } else if (minBudget >= 1000 && maxBudget <= 500000) {
+        const projectC = 30000;
+        recommendation = `Nós recomendamos o projeto C, com o valor ${projectC.toLocaleString(
+          "pt-BR",
+          { style: "currency", currency: "BRL" }
+        )}`;
+      } else if (minBudget >= 700000) {
+        const projectD = 70000;
+        recommendation = `Nós recomendamos o projeto D, com o valor ${projectD.toLocaleString(
+          "pt-BR",
+          { style: "currency", currency: "BRL" }
+        )}`;
+      } else {
+        recommendation =
+          "No momento não temos projetos que caibam no seu orçamento.";
+      }
+
+      document.getElementById("result").innerText = recommendation;
+    }
+
+    // Animate project detail on scroll
+    document.addEventListener("DOMContentLoaded", function () {
+      var projectDetail = document.querySelector(".project-detail");
+      var projectDetailPosition = projectDetail.getBoundingClientRect().top;
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > projectDetailPosition - window.innerHeight / 1.5) {
+          projectDetail.classList.add("opacity-100");
+          projectDetail.classList.remove("opacity-0");
+        }
+      });
+    });
+
+    // Navbar underline animation for desktop
+    const icones = document.getElementById("icones");
+    const linha = document.createElement("div");
+    linha.id = "linha";
+    linha.className =
+      "absolute bottom-0 h-1 bg-orange-500 rounded-full transition-all duration-300 ease-in-out hidden md:block";
+    icones.style.position = "relative";
+    icones.appendChild(linha);
+
+    const links = icones.querySelectorAll("a[href^='#']");
+    function updateLinha(el) {
+      const rect = el.getBoundingClientRect();
+      const parentRect = icones.getBoundingClientRect();
+      linha.style.width = rect.width + "px";
+      linha.style.left = rect.left - parentRect.left + "px";
+      linha.style.bottom = "0";
+    }
+
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        updateLinha(e.target);
+        const targetId = e.target.getAttribute("href").substring(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    });
+
+    // Initialize underline on page load for #home
+    window.addEventListener("load", () => {
+      const activeLink = document.querySelector("#home");
+      if (activeLink) updateLinha(activeLink);
+    });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById("menu-btn");
+    const menuCloseBtn = document.getElementById("menu-close-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuOverlay = document.getElementById("menu-overlay");
+
+    function openMenu() {
+      mobileMenu.classList.remove("translate-x-full");
+      mobileMenu.classList.add("translate-x-0");
+      menuOverlay.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      menuBtn.setAttribute("aria-expanded", "true");
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.add("translate-x-full");
+      mobileMenu.classList.remove("translate-x-0");
+      menuOverlay.classList.add("hidden");
+      document.body.style.overflow = "";
+      menuBtn.setAttribute("aria-expanded", "false");
+    }
+
+    menuBtn.addEventListener("click", openMenu);
+    menuCloseBtn.addEventListener("click", closeMenu);
+    menuOverlay.addEventListener("click", closeMenu);
+
+    // Close menu on link click (mobile)
+    const mobileLinks = mobileMenu.querySelectorAll("a");
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        closeMenu();
+      });
+    });
+
+    // Accessibility: close menu on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !mobileMenu.classList.contains("translate-x-full")) {
+        closeMenu();
+      }
+    });
+  </script>
+ </body>
+</html>
